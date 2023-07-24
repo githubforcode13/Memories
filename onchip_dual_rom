@@ -1,0 +1,62 @@
+module dual_rom2(dout1,dout2,addr1,addr2,clk);
+input clk;
+input [2:0] addr1;
+input [2:0] addr2;
+output [63:0] dout1;
+output [63:0] dout2;
+reg [63:0] dout1_next;
+reg [63:0] dout2_next;
+reg [63:0] dout1_reg1;
+reg [63:0] dout2_reg1;
+reg [63:0] dout1;
+reg [63:0] dout2;
+wire [63:0] loc0;
+wire [63:0] loc1;
+wire [63:0] loc2;
+wire [63:0] loc3;
+wire [63:0] loc4;
+wire [63:0] loc5;
+wire [63:0] loc6;
+wire [63:0] loc7;
+assign loc0 = 64'h 5BA7892E23F5676A;
+assign loc1 = 64'h 5B5B5B5B5B5B5B6A;
+assign loc2 = 64'h 345CDE56AB9F076A;
+assign loc3 = 64'h 3456DAE23CD4A76A;
+assign loc4 = 64'h 5BA23456DAE277AE;
+assign loc5 = 64'h A3456D89EACBB345;
+assign loc6 = 64'h 3455DAEC56AA90BC;
+assign loc7 = 64'h 234AC56DE781F34A;
+always@(loc0 or loc1 or loc2 or loc3 or loc4 or loc5 or loc6 or loc7 or addr1 or addr2)
+begin
+case(addr1)
+3'b000: dout1_next=loc0;
+3'b001: dout1_next=loc1;
+3'b010: dout1_next=loc2;
+3'b011: dout1_next=loc3;
+3'b100: dout1_next=loc4;
+3'b101: dout1_next=loc5;
+3'b110: dout1_next=loc6;
+3'b111: dout1_next=loc7;
+endcase
+case(addr2)
+3'b000: dout2_next=loc0;
+3'b001: dout2_next=loc1;
+3'b010: dout2_next=loc2;
+3'b011: dout2_next=loc3;
+3'b100: dout2_next=loc4;
+3'b101: dout2_next=loc5;
+3'b110: dout2_next=loc6;
+3'b111: dout2_next=loc7;
+endcase
+end
+always@(posedge clk)
+begin
+dout1_reg1 <= dout1_next;
+dout2_reg1 <= dout2_next;
+end
+always@(posedge clk)
+begin
+dout1 <= dout1_reg1;
+dout2 <= dout2_reg1;
+end
+endmodule
