@@ -1,0 +1,43 @@
+module sigle_ram_tb();
+reg clk;
+reg wr;
+reg [7:0] data;
+reg [5:0] addr;
+wire [7:0] out;
+single_ram  single_ram1(.clk(clk),
+                       .wr(wr),
+                       .data(data),
+                       .addr(addr),
+                       .out(out));
+always #5 clk=~clk;
+initial begin
+clk = 1'b0;
+wr = 1;
+data = 8'ha1;
+addr = 6'd1;
+#10
+data = 8'hb1;
+addr = 6'd2;
+#5
+data = 8'ha3;
+addr = 6'd1;
+#5
+wr = 0;
+addr = 6'd1;
+#5
+addr = 6'd0;
+#5
+wr =1;
+data = 8'ha6;
+addr = 5'd6;
+#5
+data = 8'hb5;
+addr = 5'd8;
+#5
+wr = 0;
+addr = 6'd4;
+#5
+$1000;
+$finish;
+end
+endmodule
