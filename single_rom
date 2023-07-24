@@ -1,0 +1,52 @@
+module singlerom(addr,clk,d);
+input clk;
+input [5:0] addr;
+output [7:0] d;
+reg [7:0] d;
+wire [7:0] d_next;
+reg [63:0] mem [7:0];
+reg [7:0] byte_data [7:0];
+wire [63:0] mem_data;
+wire [63:0] loc0;
+wire [63:0] loc1;
+wire [63:0] loc2;
+wire [63:0] loc3;
+wire [63:0] loc4;
+wire [63:0] loc5;
+wire [63:0] loc6;
+wire [63:0] loc7;
+assign loc0 = 64'h A4573D6792A35667;
+assign loc1 = 64'h B543CA567DE35667;
+assign loc2 = 64'h A780CD3562DE45A7;
+assign loc3 = 64'h 5B5B5B5B5B6AC341;
+assign loc4 = 64'h A0A02356CED5199A;
+assign loc5 = 64'h 89AC426CE56D781B;
+assign loc6 = 64'h 9AC4377CED8002FE;
+assign loc7 = 64'h 23465ACE5C6C71AC;
+always@(loc0 or loc1 or loc2 or loc3 or loc4 or loc5 or loc6 or loc7)
+begin
+mem[0] = loc0;
+mem[1] = loc1;
+mem[2] = loc2;
+mem[3] = loc3;
+mem[4] = loc4;
+mem[5] = loc5;
+mem[6] = loc6;
+mem[7] = loc7;
+end
+always@(mem_data)
+begin
+byte_data[0] = mem_data[63:56];
+byte_data[1] = mem_data[55:48];
+byte_data[2] = mem_data[47:40];
+byte_data[3] = mem_data[39:32];
+byte_data[4] = mem_data[31:24];
+byte_data[5] = mem_data[23:16];
+byte_data[6] = mem_data[15:8];
+byte_data[7] = mem_data[7:0];
+end
+assign mem_data = mem[addr[5:3]];
+assign d_next = byte_data[addr[2:0]];
+always@(posedge clk)
+d <= d_next;
+endmodule
