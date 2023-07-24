@@ -1,0 +1,18 @@
+module singlerom_tb(d);
+output [7:0] d;
+reg clk;
+reg [5:0] addr;
+singlerom singlerom1(.clk(clk),
+                     .addr(addr),
+                     .d(d));
+integer count;
+initial begin
+clk = 1'b0;
+#8 addr = 0;
+for(count=0;count<64;count=count+1)
+#8 addr = count;
+#30
+$stop;
+end
+always #5 clk = ~clk;
+endmodule
